@@ -13,7 +13,7 @@ All containers should automatically clean up after themselves.
 
 ## Usage
 
-Drive the `./build.sh` script with the following arguments.. 
+Drive the `./run_build.sh` script with the following arguments.. 
 
 - `-b` builder image name (eg, `builder:testbuilder`)
 - `-r` the registry to use (builder image is expected to be found here, and app image will be pushed here, eg, `localhost:5000`)
