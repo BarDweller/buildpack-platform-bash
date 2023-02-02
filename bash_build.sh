@@ -212,13 +212,6 @@ docker run \
 
 echo -e "$MAGENTA>>>>>>>>>> Running extender...$RESET"
 
-# Kaniko refers to the images by their Repo Digest, this is 
-# a little hacky, but we ask docker to give us the first RepoDigest
-# for the builder image we have been using, and then use that to form
-# up the oci:/kaniko/cache/base/id reference that extender will 
-# use to refer to the builder image. 
-BUILDERHASH=$(docker inspect --format='{{index .RepoDigests 0}}' $REGISTRY_HOST/$BUILDER  | sed -e 's/^.*sha256:/sha256:/g' )
-
 # Invoke the extender phase, passing the kaniko cache reference for the
 # builder image, so it can be extended by any generated dockerfiles from
 # extensions. 
@@ -239,8 +232,7 @@ docker run \
   -generated /layers/generated \
   -log-level $DEBUG \
   -gid ${CNB_GROUP_ID} \
-  -uid ${CNB_USER_ID} \
-  oci:/kaniko/cache/base/$BUILDERHASH
+  -uid ${CNB_USER_ID} 
 
 echo -e "$MAGENTA>>>>>>>>>> Exporting final app image...$RESET"
 
